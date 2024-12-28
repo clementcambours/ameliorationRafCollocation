@@ -15,22 +15,24 @@ class Distance:
         coords = all_transformed_data[["lambert_E", "lambert_N"]].values
         print('coord : ', type(coords))
 
-        # Initialisation de la matrice des distances
-        dist_matrix = np.zeros((coords.shape[0], coords.shape[0]))
+        # # Initialisation de la matrice des distances
+        # dist_matrix = np.zeros((coords.shape[0], coords.shape[0]))
         
 
-        # Calcul des distances
-        for l in range(coords.shape[0]):
-            # Calcul des distances pour les indices supérieurs à l
-            distE = coords[l, 0] - coords[l+1:, 0]
-            # print('shape distE : ', distE.shape)
-            distN = coords[l, 1] - coords[l+1:, 1]
-            # print('shape distN : ', distN.shape)
-            dist = np.sqrt(distE**2 + distN**2)
-            # print('shape dist : ', dist.shape)
+        # # Calcul des distances
+        # for l in range(coords.shape[0]):
+        #     # Calcul des distances pour les indices supérieurs à l
+        #     distE = coords[l, 0] - coords[l+1:, 0]
+        #     # print('shape distE : ', distE.shape)
+        #     distN = coords[l, 1] - coords[l+1:, 1]
+        #     # print('shape distN : ', distN.shape)
+        #     dist = np.sqrt(distE**2 + distN**2)
+        #     # print('shape dist : ', dist.shape)
 
-            # Remplissage de la matrice triangulaire supérieure
-            dist_matrix[l, l+1:] = dist
+        #     # Remplissage de la matrice triangulaire supérieure
+        #     dist_matrix[l, l+1:] = dist
+        
+        dist_matrix = np.linalg.norm(coords[:, None, :] - coords[None, :, :], axis=-1)
 
         print("dist_matrix :\n", dist_matrix.shape)
         self.dist_matrix = dist_matrix
